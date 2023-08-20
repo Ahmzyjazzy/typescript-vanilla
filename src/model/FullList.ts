@@ -23,18 +23,32 @@ export default class FullList implements List {
     }
 
     load(): void {
-        throw new Error("Method not implemented.");
+        const storedList: string | null = localStorage.getItem('myList')
+        if (typeof storedList !== 'string') return
+        const parsedList: { _id: string, _item: string, _checked: boolean }[] = JSON.parse(storedList)
+        
+        parsedList.forEach(itemObj => {
+            const newListItem = new ListItem(itemObj._id, itemObj._item, itemObj._checked)
+            FullList.instance.addItem(newListItem)
+        })
     }
+
     save(): void {
-        throw new Error("Method not implemented.");
+        localStorage.setItem('myList', JSON.stringify(this._list))
     }
+    
     clear(): void {
-        throw new Error("Method not implemented.");
+        this._list = []
+        this.save()
     }
+
     addItem(item: ListItem): void {
-        throw new Error("Method not implemented.");
+        this._list.push(item)
+        this.save()
     }
+
     removeItem(id: string): void {
-        throw new Error("Method not implemented.");
+        this._list = this._list.filter(item => item.id !== id)
+        this.save()
     }
 }
