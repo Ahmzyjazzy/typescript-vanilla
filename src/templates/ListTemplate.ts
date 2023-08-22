@@ -24,6 +24,7 @@ export default class ListTemplate implements DOMList {
         this.clear()
 
         fullList.list.forEach(item => {
+
             const li = document.createElement('li') as HTMLLIElement
             li.className = 'item'
 
@@ -54,6 +55,7 @@ export default class ListTemplate implements DOMList {
                 this.render(fullList)
             })
             
+            this.ul.append(li)
         });
     }
 
